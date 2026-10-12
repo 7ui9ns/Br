@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff" id="tc">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>مُراجعة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --fg:#000000; --surface:#f2f2f2; --surface2:#e5e5e5; --muted:#6b6b6b; --line:rgba(0,0,0,.14);
+  --ph1:#d6d6d6; --ph2:#efefef; --shadow:0 6px 18px rgba(0,0,0,.12);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#000000; --fg:#ffffff; --surface:#141414; --surface2:#242424; --muted:#8e8e8e; --line:rgba(255,255,255,.16);
+    --ph1:#2c2c2c; --ph2:#171717; --shadow:0 6px 18px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#000000; --fg:#ffffff; --surface:#141414; --surface2:#242424; --muted:#8e8e8e; --line:rgba(255,255,255,.16);
+  --ph1:#2c2c2c; --ph2:#171717; --shadow:0 6px 18px rgba(0,0,0,.6);
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--fg);
+  font-family:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+svg{display:block;flex:none}
+#app{max-width:640px;margin:0 auto;padding:18px 16px 120px}
+
+.pg-h{margin:2px 0 16px}
+.pg-h h1{margin:0;font-size:28px;font-weight:700;letter-spacing:-.3px}
+.pg-h .sub{color:var(--muted);font-size:13px;margin-top:3px}
+
+.chips{display:flex;gap:8px;overflow-x:auto;margin:0 -16px;padding:4px 16px 12px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;display:flex;align-items:center;gap:8px;padding:9px 16px 9px 14px;border-radius:999px;border:1.5px solid var(--line);font-size:15px;font-weight:500;white-space:nowrap}
+.chip.on{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+.chip.add{color:var(--muted);border-style:dashed}
+.cim{display:block;width:18px;height:18px;border-radius:50%;background-size:cover;background-position:center}
+
+.sec-h{display:flex;align-items:center;justify-content:space-between;margin:14px 0 12px;gap:10px}
+.sec-h h2{margin:0;font-size:20px;font-weight:700;display:flex;align-items:center;gap:8px}
+.sec-h .n{color:var(--muted);font-size:14px;font-weight:400}
+.ico{width:38px;height:38px;border-radius:12px;border:1.5px solid var(--line);display:grid;place-items:center}
+.seg{display:inline-flex;background:var(--surface);border-radius:12px;padding:3px;gap:2px}
+.seg button{padding:7px 12px;border-radius:9px;font-size:13px;font-weight:500;color:var(--muted);flex:1}
+.seg button.on{background:var(--fg);color:var(--bg);font-weight:600}
+.seg.wide{display:flex}
+.seg.wide button{padding:12px 10px;font-size:15px}
+
+.poster{position:relative;aspect-ratio:2/3;width:100%;border-radius:14px;background-color:var(--ph2);background-size:cover;background-position:center;
+  overflow:hidden;display:flex;align-items:center;justify-content:center}
+.poster.ph{background-image:linear-gradient(160deg,var(--ph1),var(--ph2));font-size:30px;font-weight:700;color:var(--muted)}
+
+.podium{direction:ltr;display:grid;grid-template-columns:1fr 1.18fr 1fr;gap:10px;align-items:end;margin-bottom:6px}
+.pc{display:flex;flex-direction:column;align-items:stretch;text-align:center;min-width:0}
+.pw{position:relative;box-shadow:var(--shadow);border-radius:14px}
+.sc{position:absolute;bottom:7px;inset-inline-end:7px;background:rgba(0,0,0,.82);color:#fff;border-radius:8px;padding:2px 8px;font-weight:700;font-size:13px;direction:ltr;font-variant-numeric:tabular-nums}
+.pc .nm{margin:9px 2px 8px;font-size:13px;font-weight:500;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em}
+.step{display:grid;place-items:center;border-radius:12px 12px 0 0;font-size:28px;font-weight:700;background:var(--surface2);color:var(--fg)}
+.p1 .step{background:var(--fg);color:var(--bg)}
+
+.list{display:flex;flex-direction:column;gap:8px}
+.row{display:grid;grid-template-columns:26px 50px 1fr auto;align-items:center;gap:12px;width:100%;text-align:start;
+  background:var(--surface);border-radius:16px;padding:8px 12px}
+.row.np{grid-template-columns:50px 1fr auto}
+.row .pos{color:var(--muted);font-weight:600;font-size:14px;text-align:center;direction:ltr}
+.row .poster{width:50px;border-radius:10px;font-size:20px}
+.tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.row .nm{font-size:16px;font-weight:500;line-height:1.35;overflow-wrap:anywhere}
+.row .sub{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.score{display:inline-grid;place-items:center;min-width:48px;height:32px;padding:0 8px;border-radius:10px;border:1.5px solid var(--fg);
+  font-weight:700;font-size:15px;direction:ltr;font-variant-numeric:tabular-nums}
+
+.empty{margin-top:24px;padding:30px 18px;border-radius:20px;border:1.5px dashed var(--line);text-align:center;color:var(--muted)}
+.empty b{display:block;color:var(--fg);font-size:18px;margin-bottom:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 22px;border-radius:14px;background:var(--fg);color:var(--bg);font-weight:700;font-size:16px}
+.btn.ghost{background:var(--surface2);color:var(--fg);font-weight:600}
+.btn.line{background:transparent;color:var(--fg);border:1.5px solid var(--fg);font-weight:600}
+.btn.danger{background:transparent;color:var(--fg);border:1.5px solid var(--fg);font-weight:600}
+.btn.danger.sure{background:var(--fg);color:var(--bg)}
+.empty .btn{margin-top:14px}
+.fpick{position:relative;overflow:hidden}
+.fpick input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:0}
+.acts{display:flex;gap:10px;margin-top:8px}
+.acts .btn{flex:1}
+
+.nav{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:10}
+.nav-in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);align-items:end}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;font-size:11px;color:var(--muted)}
+.tab.on{color:var(--fg);font-weight:600}
+.tab.add{padding:0}
+.tab .circ{width:54px;height:54px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;margin-top:-24px;box-shadow:var(--shadow)}
+
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:640px;max-height:92%;overflow-y:auto;background:var(--bg);border-radius:26px 26px 0 0;
+  padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion: reduce){.sheet{animation:none}}
+.sheet h3{margin:0 0 14px;font-size:20px}
+.grip{width:40px;height:4px;border-radius:2px;background:var(--line);margin:-6px auto 14px}
+.field{margin-bottom:14px}
+.field label.l{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+.inp{width:100%;height:48px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);padding:0 14px;font-size:16px}
+.inp:focus{border-color:var(--fg);outline:none}
+textarea.inp{height:auto;padding:12px 14px;resize:none;line-height:1.5}
+.pick{display:flex;gap:14px;align-items:center}
+.pick .poster{width:92px;flex:none}
+.pick #pv-wrap{width:92px;flex:none}
+.pick .hint{display:flex;flex-direction:column;gap:8px;align-items:flex-start;color:var(--muted);font-size:13px;line-height:1.5}
+.pick .btn{height:40px;font-size:14px;padding:0 14px}
+.rate{direction:ltr}
+.rate .lab{direction:rtl;text-align:start;font-size:13px;color:var(--muted);margin-bottom:6px}
+.rate .line{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.rate .big{font-size:46px;font-weight:700;min-width:130px;text-align:center;font-variant-numeric:tabular-nums}
+.rate .pm{width:52px;height:52px;border-radius:16px;border:1.5px solid var(--line);display:grid;place-items:center}
+.rate input[type=range]{width:100%;margin:12px 0 0;accent-color:var(--fg);height:32px}
+.rate .ends{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+.icons{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.ic{aspect-ratio:1;border-radius:14px;border:1.5px solid var(--line);display:grid;place-items:center}
+.ic.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.ic .cim{width:28px;height:28px}
+.note{color:var(--muted);font-size:13px;line-height:1.55;margin:8px 0 0}
+
+.cs{background:var(--surface);border-radius:20px;padding:16px;margin-bottom:12px}
+.cs h3{margin:0 0 4px;font-size:17px}
+.cs p{margin:0 0 12px;color:var(--muted);font-size:13.5px;line-height:1.55}
+.foot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:18px}
+
+.me{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.av{width:88px;height:88px;border-radius:50%;background:var(--surface2);background-size:cover;background-position:center;display:grid;place-items:center;flex:none;color:var(--muted);font-size:32px;font-weight:700;overflow:hidden}
+.me .col{display:flex;flex-direction:column;gap:8px;flex:1;min-width:0}
+.me .btn{height:38px;font-size:14px;padding:0 14px;align-self:flex-start}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:6px}
+.st{background:var(--surface);border-radius:16px;padding:14px 8px;text-align:center}
+.st b{display:block;font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.st span{font-size:12.5px;color:var(--muted)}
+.crow{display:grid;grid-template-columns:28px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.crow:last-child{border-bottom:0}
+.crow .t{font-size:15px;font-weight:500}
+.crow .s{font-size:12.5px;color:var(--muted)}
+.meter{height:5px;border-radius:3px;background:var(--surface2);margin-top:6px;overflow:hidden;direction:ltr}
+.meter i{display:block;height:100%;background:var(--fg);border-radius:3px}
+.hist{direction:ltr;display:flex;gap:6px;height:120px;align-items:stretch}
+.hb{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0}
+.hb .col{flex:1;min-height:0;display:flex;align-items:flex-end}
+.hb .bar{width:100%;min-height:3px;background:var(--fg);border-radius:4px 4px 2px 2px}
+.hb span{font-size:11px;color:var(--muted);text-align:center}
+.qwrap{position:relative;margin-bottom:14px}
+.qwrap .inp{padding-inline-start:44px}
+.qwrap svg{position:absolute;inset-inline-start:14px;top:14px;color:var(--muted)}
+.sr{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:center;width:100%;text-align:start;background:var(--surface);border-radius:12px;padding:6px 10px;margin-top:6px}
+.sr .th{width:40px;aspect-ratio:2/3;border-radius:8px;background-color:var(--ph2);background-size:cover;background-position:center}
+.sr .nm{font-size:14.5px;font-weight:500;line-height:1.35;overflow-wrap:anywhere}
+.sr .sub{font-size:12px;color:var(--muted)}
+.srmsg{color:var(--muted);font-size:13px;padding:10px 2px;line-height:1.55}
+.pre{display:flex;flex-wrap:wrap;gap:8px}
+.pchip{padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);font-size:14px}
+select.inp{appearance:auto}
+a.lnk{color:var(--fg);text-decoration:underline}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(100px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);
+  padding:10px 16px;border-radius:12px;font-size:14px;z-index:40;max-width:90%}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<nav class="nav" id="nav" aria-label="التنقل"></nav>
+<div id="layer"></div>
+<div id="toast-host"></div>
+
+<script>
+(function(){
+"use strict";
+var $ = function(s, el){ return (el||document).querySelector(s); };
+var app = $('#app'), nav = $('#nav'), layer = $('#layer');
+var uid = function(){ return Math.random().toString(36).slice(2,9) + Date.now().toString(36); };
+var esc = function(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+
+/* ---------- icons (line SVG, no emoji) ---------- */
+var ICONS = {
+  film:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/>',
+  tv:'<rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 3l4 4 4-4"/>',
+  disc:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/>',
+  music:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',
+  game:'<rect x="2.5" y="7" width="19" height="11" rx="5.5"/><path d="M7 10.5v4M5 12.5h4M16 11.5h.01M18.5 13.5h.01"/>',
+  book:'<path d="M5 4h10a3 3 0 013 3v13H8a3 3 0 01-3-3z"/><path d="M5 17a3 3 0 013-3h10"/>',
+  food:'<path d="M6 3v7a2 2 0 002 2v9M10 3v7a2 2 0 01-2 2M17 3c-2 2-3 5-3 8h3v10"/>',
+  mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/>',
+  star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+  plane:'<path d="M21 3L3 10l7 3 3 7z"/><path d="M10 13l11-10"/>',
+  cart:'<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M3 4h3l2.5 11h10L21 7H7"/>',
+  ball:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/>',
+  home:'<path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/>',
+  sliders:'<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  dots:'<circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/>'
+};
+var PICKABLE = ['film','tv','disc','music','game','book','food','mic','star','plane','cart','ball'];
+function svg(name, size, sw){
+  return '<svg viewBox="0 0 24 24" width="' + (size||22) + '" height="' + (size||22) + '" fill="none" stroke="currentColor" stroke-width="' + (sw||1.8) +
+    '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[name] || ICONS.star) + '</svg>';
+}
+function catIcon(c, size){
+  if(c.img) return '<span class="cim" style="width:' + size + 'px;height:' + size + 'px;' + bgUrl(c.img) + '"></span>';
+  return svg(c.icon, size);
+}
+
+/* ---------- state ---------- */
+var DEFAULT = {
+  cats:[{id:'movies',name:'أفلام',icon:'film',source:'movie'},{id:'series',name:'مسلسلات',icon:'tv',source:'tv'},{id:'albums',name:'ألبومات',icon:'disc',source:'album'}],
+  items:[], active:'movies', sort:'rating', settings:{theme:null}, profile:{name:'',avatar:''}
+};
+var state = JSON.parse(JSON.stringify(DEFAULT));
+var view = 'home', db = null, dl = null, query = '', pendingImport = null;
+
+function migrate(){
+  var m = {movies:'film', series:'tv', albums:'disc'};
+  state.cats.forEach(function(c){
+    if(!c.icon && !c.img) c.icon = m[c.id] || 'star';
+    if(!c.source) c.source = {movies:'movie', series:'tv', albums:'album'}[c.id] || 'none';
+    delete c.emoji;
+  });
+  state.items = state.items || [];
+  state.items.forEach(function(i){ if(i.note == null) i.note = ''; if(!i.img) i.img = ''; });
+  state.settings = state.settings || {theme:null};
+  state.profile = state.profile || {name:'',avatar:''};
+  state.sort = state.sort || 'rating';
+  if(!state.cats.some(function(c){ return c.id === state.active; })) state.active = state.cats[0].id;
+}
+
+/* ---------- storage: IndexedDB, then localStorage ---------- */
+function openDB(){
+  return new Promise(function(res, rej){
+    try{
+      var r = indexedDB.open('my-ratings', 1);
+      r.onupgradeneeded = function(){ r.result.createObjectStore('kv'); };
+      r.onsuccess = function(){ res(r.result); };
+      r.onerror = function(){ rej(r.error); };
+    }catch(e){ rej(e); }
+  });
+}
+async function load(){
+  try{
+    db = await openDB();
+    var v = await new Promise(function(res, rej){
+      var q = db.transaction('kv').objectStore('kv').get('state');
+      q.onsuccess = function(){ res(q.result); };
+      q.onerror = function(){ rej(q.error); };
+    });
+    if(v && v.cats && v.cats.length){ state = v; }
+  }catch(e){
+    db = null;
+    try{ var s = localStorage.getItem('my-ratings'); if(s){ var p = JSON.parse(s); if(p && p.cats && p.cats.length) state = p; } }catch(e2){}
+  }
+  migrate();
+}
+async function save(){
+  if(db){
+    try{
+      await new Promise(function(res, rej){
+        var t = db.transaction('kv','readwrite');
+        t.objectStore('kv').put(state,'state');
+        t.oncomplete = res;
+        t.onerror = function(){ rej(t.error); };
+        t.onabort = function(){ rej(t.error); };
+      });
+      return;
+    }catch(e){}
+  }
+  try{ localStorage.setItem('my-ratings', JSON.stringify(state)); }
+  catch(e){ toast('تعذّر الحفظ على هذا المتصفح'); }
+}
+
+/* ---------- theme ---------- */
+function effTheme(){
+  if(state.settings.theme) return state.settings.theme;
+  try{ return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }catch(e){ return 'light'; }
+}
+function applyTheme(){
+  var root = document.documentElement;
+  if(state.settings.theme) root.setAttribute('data-theme', state.settings.theme); else root.removeAttribute('data-theme');
+  $('#tc').setAttribute('content', effTheme() === 'dark' ? '#000000' : '#ffffff');
+}
+
+/* ---------- helpers ---------- */
+function fmt(r){ return Number(r).toFixed(1); }
+function curCat(){ return state.cats.find(function(c){ return c.id === state.active; }) || state.cats[0]; }
+function catById(id){ return state.cats.find(function(c){ return c.id === id; }); }
+function toast(msg){
+  var host = $('#toast-host');
+  host.innerHTML = '<div class="toast" role="status">' + esc(msg) + '</div>';
+  clearTimeout(toast.t);
+  toast.t = setTimeout(function(){ host.innerHTML = ''; }, 2400);
+}
+function poster(it){
+  if(it.img) return '<div class="poster" style="' + bgUrl(it.img) + '"></div>';
+  var ch = Array.from(it.name.trim())[0] || '؟';
+  return '<div class="poster ph">' + esc(ch.toUpperCase()) + '</div>';
+}
+function compress(file, max, type, q){
+  return new Promise(function(res, rej){
+    var fr = new FileReader();
+    fr.onload = function(){
+      var im = new Image();
+      im.onload = function(){
+        var s = Math.min(1, max / Math.max(im.width, im.height));
+        var w = Math.max(1, Math.round(im.width * s)), h = Math.max(1, Math.round(im.height * s));
+        var c = document.createElement('canvas'); c.width = w; c.height = h;
+        var x = c.getContext('2d');
+        if(type === 'image/jpeg'){ x.fillStyle = '#fff'; x.fillRect(0,0,w,h); }
+        x.drawImage(im,0,0,w,h);
+        res(c.toDataURL(type, q));
+      };
+      im.onerror = rej; im.src = fr.result;
+    };
+    fr.onerror = rej; fr.readAsDataURL(file);
+  });
+}
+function sortItems(arr, mode){
+  var a = arr.slice();
+  if(mode === 'new') a.sort(function(x,y){ return y.added - x.added; });
+  else if(mode === 'name') a.sort(function(x,y){ return x.name.localeCompare(y.name, 'ar'); });
+  else a.sort(function(x,y){ return y.rating - x.rating || x.added - y.added; });
+  return a;
+}
+function avg(arr){ if(!arr.length) return null; var t = 0; arr.forEach(function(i){ t += i.rating; }); return t / arr.length; }
+
+
+/* ---------- sources (title search) ---------- */
+// ضع مفتاح TMDB هنا إن أردت أن يعمل البحث لجميع الأصدقاء دون أن يدخل كل واحد مفتاحه.
+var DEFAULT_TMDB_KEY = '';
+var SOURCES = {
+  none:{label:'بدون مصدر (إدخال يدوي)'},
+  movie:{label:'أفلام (iTunes)'},
+  tv:{label:'مسلسلات وكرتون (TVmaze)'},
+  movie_tmdb:{label:'أفلام (TMDB، يحتاج مفتاحاً)'},
+  tv_tmdb:{label:'مسلسلات (TMDB، يحتاج مفتاحاً)'},
+  anime:{label:'أنمي (AniList)'},
+  manga:{label:'مانغا يابانية (AniList)'},
+  manhua:{label:'مانها صينية (AniList)'},
+  manhwa:{label:'مانهوا كورية (AniList)'},
+  book:{label:'كتب (Open Library)'},
+  album:{label:'ألبومات (iTunes)'},
+  song:{label:'أغاني (iTunes)'},
+  wiki:{label:'عام بالعربية (ويكيداتا)'}
+};
+var PRESETS = [
+  {n:'أنمي', i:'tv', s:'anime'}, {n:'مانغا', i:'book', s:'manga'}, {n:'مانها', i:'book', s:'manhua'},
+  {n:'مانهوا', i:'book', s:'manhwa'}, {n:'كتب', i:'book', s:'book'}, {n:'أغاني', i:'music', s:'song'}, {n:'كرتون', i:'tv', s:'tv'}
+];
+function tmdbKey(){ return String(state.settings.tmdbKey || DEFAULT_TMDB_KEY || '').trim(); }
+function imgSafe(u){ return u ? String(u).replace(/'/g,'%27').replace(/"/g,'%22').replace(/\s/g,'%20').replace(/[<>\\]/g,'') : ''; }
+function bgUrl(u){ return "background-image:url('" + imgSafe(u) + "')"; }
+function jget(url, opts){
+  return fetch(url, opts).then(function(r){ if(!r.ok) throw new Error('http ' + r.status); return r.json(); });
+}
+function jsonp(url){
+  return new Promise(function(res, rej){
+    var cb = 'cb_' + uid(), el = document.createElement('script'), t;
+    function done(){ delete window[cb]; if(el.parentNode) el.parentNode.removeChild(el); clearTimeout(t); }
+    window[cb] = function(d){ done(); res(d); };
+    el.onerror = function(){ done(); rej(new Error('jsonp')); };
+    t = setTimeout(function(){ done(); rej(new Error('timeout')); }, 10000);
+    el.src = url + (url.indexOf('?') > -1 ? '&' : '?') + 'callback=' + cb;
+    document.head.appendChild(el);
+  });
+}
+function sTmdb(kind, q){
+  var key = tmdbKey();
+  if(!key) return Promise.reject(new Error('nokey'));
+  var url = 'https://api.themoviedb.org/3/search/' + (kind === 'tv' ? 'tv' : 'movie') + '?language=ar&include_adult=false&query=' + encodeURIComponent(q);
+  var opts = {};
+  if(key.length > 40){ opts.headers = {Authorization:'Bearer ' + key, accept:'application/json'}; }
+  else{ url += '&api_key=' + encodeURIComponent(key); }
+  return jget(url, opts).then(function(d){
+    return (d.results || []).slice(0, 10).map(function(x){
+      var title = x.title || x.name || '', orig = x.original_title || x.original_name || '';
+      var year = (x.release_date || x.first_air_date || '').slice(0, 4);
+      return {title:title, sub:[year, orig && orig !== title ? orig : ''].filter(Boolean).join('، '),
+        img: x.poster_path ? 'https://image.tmdb.org/t/p/w342' + x.poster_path : ''};
+    });
+  });
+}
+function sAniList(kind, q){
+  var type = kind === 'anime' ? 'ANIME' : 'MANGA';
+  var country = {manga:'JP', manhua:'CN', manhwa:'KR'}[kind];
+  // country code is passed as a variable (it is a scalar type, not an enum literal)
+  var query = 'query($q:String' + (country ? ',$c:CountryCode' : '') + '){Page(page:1,perPage:10){media(search:$q,type:' + type + (country ? ',countryOfOrigin:$c' : '') +
+    ',isAdult:false' + (type === 'MANGA' ? ',format_not:NOVEL' : '') + ',sort:SEARCH_MATCH){title{romaji english native}coverImage{large}startDate{year}}}}';
+  var vars = country ? {q:q, c:country} : {q:q};
+  return fetch('https://graphql.anilist.co', {method:'POST', headers:{'Content-Type':'application/json', Accept:'application/json'},
+    body:JSON.stringify({query:query, variables:vars})}).then(function(r){
+    return r.json().catch(function(){ return {}; }).then(function(d){
+      if(!r.ok || d.errors || !d.data){
+        throw new Error('AniList ' + r.status + ': ' + ((d.errors && d.errors[0] && d.errors[0].message) || 'bad response'));
+      }
+      return d.data.Page.media.map(function(m){
+        var t = m.title || {}, title = t.english || t.romaji || t.native || '';
+        return {title:title, sub:[m.startDate && m.startDate.year, t.romaji && t.romaji !== title ? t.romaji : ''].filter(Boolean).join('، '),
+          img: m.coverImage && m.coverImage.large ? m.coverImage.large : ''};
+      });
+    });
+  });
+}
+function sBooks(q){
+  return jget('https://openlibrary.org/search.json?limit=10&fields=title,author_name,first_publish_year,cover_i&q=' + encodeURIComponent(q)).then(function(d){
+    return (d.docs || []).filter(function(x){ return x.title; }).map(function(x){
+      return {title:x.title, sub:[(x.author_name || [])[0], x.first_publish_year].filter(Boolean).join('، '),
+        img: x.cover_i ? 'https://covers.openlibrary.org/b/id/' + x.cover_i + '-M.jpg' : ''};
+    });
+  });
+}
+function sItunes(kind, q){
+  var media = kind === 'movie' ? 'movie' : 'music';
+  var entity = {song:'song', album:'album', movie:'movie'}[kind];
+  var url = 'https://itunes.apple.com/search?media=' + media + '&limit=10&entity=' + entity + '&term=' + encodeURIComponent(q);
+  return jget(url).catch(function(){ return jsonp(url); }).then(function(d){
+    return (d.results || []).map(function(x){
+      return {title: kind === 'album' ? x.collectionName : x.trackName,
+        sub:[x.artistName, (x.releaseDate || '').slice(0, 4)].filter(Boolean).join('، '),
+        img:(x.artworkUrl100 || '').replace('100x100bb', '400x400bb').replace(/^http:/, 'https:')};
+    }).filter(function(r){ return r.title; });
+  });
+}
+function sTvmaze(q){
+  return jget('https://api.tvmaze.com/search/shows?q=' + encodeURIComponent(q)).then(function(d){
+    return (d || []).slice(0, 10).map(function(r){
+      var x = r.show || {}, img = x.image && (x.image.medium || x.image.original) || '';
+      return {title:x.name || '', sub:[(x.premiered || '').slice(0, 4), x.language || ''].filter(Boolean).join('، '), img:String(img).replace(/^http:/, 'https:')};
+    }).filter(function(r){ return r.title; });
+  });
+}
+function runTests(){
+  var box = $('#test-res'); if(!box) return;
+  var tests = [['أفلام (iTunes)','movie','inception'],['مسلسلات (TVmaze)','tv','friends'],['أنمي (AniList)','anime','naruto'],['مانغا (AniList)','manga','berserk'],
+    ['مانهوا (AniList)','manhwa','solo leveling'],['مانها (AniList)','manhua','soul land'],['كتب (Open Library)','book','dune'],['ألبومات (iTunes)','album','thriller'],['أغاني (iTunes)','song','beat it'],['ويكيداتا (عربي)','wiki','ناروتو']];
+  var inFrame = false; try{ inFrame = window.top !== window; }catch(e){ inFrame = true; }
+  var env = '<div class="srmsg" dir="auto">الصفحة: <span dir="ltr">' + esc(location.protocol + '//' + location.host) + '</span>، الاتصال: ' + (navigator.onLine ? 'متصل' : 'غير متصل') +
+    (inFrame ? '، والصفحة داخل إطار وقد يمنع الاتصال الخارجي' : '') + '</div>';
+  box.innerHTML = env + tests.map(function(t){ return '<div class="srmsg" id="t-' + t[1] + '" dir="auto">... ' + esc(t[0]) + '</div>'; }).join('');
+  function mark(t, ok, msg){ var el = $('#t-' + t[1]); if(el) el.innerHTML = (ok ? '✓ ' : '✗ ') + esc(t[0]) + ': <span dir="ltr">' + esc(msg) + '</span>'; }
+  tests.reduce(function(prev, t){
+    return prev.then(function(){
+      return searchSource(t[1], t[2]).then(function(l){ mark(t, true, l.length + ' results'); })
+        .catch(function(e){ mark(t, false, (e && e.message) || String(e)); });
+    });
+  }, Promise.resolve());
+}
+function hasArabic(q){ return /[\u0600-\u06FF]/.test(q || ''); }
+function sWiki(q){
+  var url = 'https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&origin=*&type=item&limit=10&language=ar&uselang=ar&search=' + encodeURIComponent(q);
+  return jget(url).then(function(d){
+    return (d.search || []).filter(function(x){ return x.label; }).map(function(x){ return {title:x.label, sub:x.description || '', img:''}; });
+  });
+}
+function searchSource(src, q){
+  if(src === 'wiki') return sWiki(q);
+  if(src === 'movie') return sItunes('movie', q);
+  if(src === 'tv') return sTvmaze(q);
+  if(src === 'movie_tmdb') return sTmdb('movie', q);
+  if(src === 'tv_tmdb') return sTmdb('tv', q);
+  if(src === 'anime' || src === 'manga' || src === 'manhua' || src === 'manhwa') return sAniList(src, q);
+  if(src === 'book') return sBooks(q);
+  if(src === 'album' || src === 'song') return sItunes(src, q);
+  return Promise.resolve([]);
+}
+var srcSeq = 0, srcTimer = null, srcList = [];
+function srRow(r, i){
+  return '<button class="sr" data-act="pick-src" data-i="' + i + '"><span class="th" style="' + (r.img ? bgUrl(r.img) : '') + '"></span>' +
+    '<span class="tx"><span class="nm" dir="auto">' + esc(r.title) + '</span>' + (r.sub ? '<span class="sub" dir="auto">' + esc(r.sub) + '</span>' : '') + '</span></button>';
+}
+function refreshSrc(){
+  var wrap = $('#src-wrap'); if(!wrap) return;
+  var sel = $('#f-cat'), c = catById(sel ? sel.value : (draft && draft.cat)), s = c && c.source;
+  srcSeq++; srcList = [];
+  if(!s || s === 'none' || !SOURCES[s]){ wrap.innerHTML = '<div class="srmsg">هذا التصنيف بدون مصدر بحث، فالإدخال يدوي. يمكنك ربطه بمصدر من إعدادات التصنيف.</div>'; return; }
+  wrap.innerHTML = '<div class="field"><label class="l" for="s-q">البحث في المصدر: ' + esc(SOURCES[s].label) + '</label>' +
+    '<input class="inp" id="s-q" dir="auto" placeholder="اكتب اسماً للبحث، أو أضف العنصر يدوياً أدناه" autocomplete="off"><div id="s-res"></div></div>';
+}
+function onSrcInput(q){
+  clearTimeout(srcTimer);
+  var box = $('#s-res'); if(!box) return;
+  q = q.trim(); srcList = [];
+  var my = ++srcSeq;
+  if(q.length < 2){ box.innerHTML = ''; return; }
+  box.innerHTML = '<div class="srmsg">جارٍ البحث...</div>';
+  var c = catById($('#f-cat').value), s = c && c.source;
+  srcTimer = setTimeout(function(){
+    searchSource(s, q).then(function(list){
+      var b = $('#s-res'); if(my !== srcSeq || !b) return;
+      srcList = list;
+      b.innerHTML = list.length ? list.map(srRow).join('') : '<div class="srmsg">لا توجد نتائج. جرّب الاسم بالإنجليزية، أو أضف العنصر يدوياً.</div>';
+    }).catch(function(err){
+      var b = $('#s-res'); if(my !== srcSeq || !b) return;
+      b.innerHTML = '<div class="srmsg">' + (err && err.message === 'nokey'
+        ? 'البحث في TMDB يحتاج مفتاحاً مجانياً. أضفه من الإعدادات، أو أضف العنصر يدوياً.'
+        : 'تعذّر الاتصال بالمصدر. تحقق من الإنترنت، أو أضف العنصر يدوياً.<br><small dir="ltr">' + esc((err && err.message) || '') + '</small>') + '</div>';
+    });
+  }, 450);
+}
+function srcSelectHTML(v){
+  return '<div class="field"><label class="l" for="c-src">مصدر البحث</label><select class="inp" id="c-src">' +
+    Object.keys(SOURCES).map(function(k){ return '<option value="' + k + '"' + (k === v ? ' selected' : '') + '>' + SOURCES[k].label + '</option>'; }).join('') + '</select></div>';
+}
+function presetsHTML(){
+  return '<div class="field"><label class="l">تصنيفات جاهزة</label><div class="pre">' +
+    PRESETS.map(function(p, i){ return '<button class="pchip" data-act="preset" data-i="' + i + '">' + esc(p.n) + '</button>'; }).join('') + '</div></div>';
+}
+function doExport(){
+  var d = new Date(), stamp = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  var name = 'my-ratings-' + stamp + '.json', data = JSON.stringify(state);
+  if(dl){
+    dl.save({filename:name, data:data}).then(function(){ toast('تم حفظ النسخة الاحتياطية'); })
+      .catch(function(err){ if(!err || err.code !== 'declined') toast('تعذّر التصدير'); });
+    return;
+  }
+  try{
+    var u = URL.createObjectURL(new Blob([data], {type:'application/json'}));
+    var a = document.createElement('a'); a.href = u; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(u); }, 3000);
+    toast('تم تجهيز النسخة الاحتياطية');
+  }catch(e){ toast('تعذّر التصدير'); }
+}
+
+
+/* ---------- discover search (all sources) ---------- */
+var ALLTYPES = ['movie','tv','anime','manga','manhwa','manhua','book','album','song'];
+var TYPE_META = {
+  wiki:{n:'ويكيداتا (عربي)', i:'star'}, movie:{n:'أفلام', i:'film'}, tv:{n:'مسلسلات', i:'tv'}, anime:{n:'أنمي', i:'tv'}, manga:{n:'مانغا', i:'book'},
+  manhwa:{n:'مانهوا', i:'book'}, manhua:{n:'مانها', i:'book'}, book:{n:'كتب', i:'book'}, album:{n:'ألبومات', i:'disc'}, song:{n:'أغاني', i:'music'}
+};
+function discTypes(q){ return dtype === 'all' ? (hasArabic(q) ? ['wiki'] : []).concat(ALLTYPES) : [dtype]; }
+var searchMode = 'lib', dq = '', dtype = 'all', dRes = {}, dSeq = 0, dTimer = null;
+function discHdr(t){ return '<div class="sec-h" style="margin:16px 0 4px"><h2 style="font-size:16px">' + esc(TYPE_META[t].n) + '</h2></div>'; }
+function discRow(t, r, i){
+  return '<button class="sr" data-act="disc-pick" data-t="' + t + '" data-i="' + i + '"><span class="th" style="' + (r.img ? bgUrl(r.img) : '') + '"></span>' +
+    '<span class="tx"><span class="nm" dir="auto">' + esc(r.title) + '</span>' + (r.sub ? '<span class="sub" dir="auto">' + esc(r.sub) + '</span>' : '') + '</span></button>';
+}
+function discBody(){
+  if(dq.trim().length < 2){
+    return '<div class="empty"><b>اكتشف عناوين جديدة</b>اكتب اسماً للبحث في المصادر، ثم اضغط على النتيجة لإضافتها وتقييمها.</div>';
+  }
+  var types = discTypes(dq.trim()), out = '', pending = 0, found = 0, errs = 0, lim = dtype === 'all' ? 5 : 10;
+  var note = hasArabic(dq) && dtype !== 'wiki' ? '<div class="srmsg">أغلب المصادر تعتمد الأسماء الإنجليزية، لذلك تظهر نتائج ويكيداتا للأسماء العربية. جرّب الاسم بالإنجليزية للحصول على أغلفة أكثر.</div>' : '';
+  types.forEach(function(t){
+    var r = dRes[t]; if(!r) return;
+    if(r.state === 'loading'){ pending++; if(dtype !== 'all') out += discHdr(t) + '<div class="srmsg">جارٍ البحث...</div>'; return; }
+    if(r.state === 'err'){ errs++; out += discHdr(t) + '<div class="srmsg">تعذّر الاتصال بالمصدر.<br><small dir="ltr">' + esc(r.msg || '') + '</small></div>'; return; }
+    if(r.list.length){ found += r.list.length; out += discHdr(t) + r.list.slice(0, lim).map(function(x, i){ return discRow(t, x, i); }).join(''); }
+  });
+  if(!pending && !found && !errs) return note + '<div class="empty"><b>لا توجد نتائج</b>جرّب الاسم بالإنجليزية، أو أضف العنصر يدوياً من زر +.</div>';
+  if(pending) out += '<div class="srmsg">جارٍ البحث...</div>';
+  return note + out;
+}
+function renderDisc(){ var b = $('#dres'); if(b) b.innerHTML = discBody(); }
+function runDiscover(){
+  clearTimeout(dTimer);
+  var q = dq.trim(), my = ++dSeq;
+  dRes = {};
+  if(q.length < 2){ renderDisc(); return; }
+  var types = discTypes(q);
+  types.forEach(function(t){ dRes[t] = {state:'loading', list:[]}; });
+  renderDisc();
+  dTimer = setTimeout(function(){
+    types.forEach(function(t){
+      searchSource(t, q).then(function(l){
+        if(my !== dSeq) return; dRes[t] = {state:'ok', list:l}; renderDisc();
+      }).catch(function(e){
+        if(my !== dSeq) return; dRes[t] = {state:'err', msg:(e && e.message) || '', list:[]}; renderDisc();
+      });
+    });
+  }, 500);
+}
+
+/* ---------- views ---------- */
+function rowHTML(it, pos, sub){
+  return '<button class="row' + (pos ? '' : ' np') + '" data-act="edit" data-id="' + it.id + '">' +
+    (pos ? '<span class="pos">' + pos + '</span>' : '') + poster(it) +
+    '<span class="tx"><span class="nm" dir="auto">' + esc(it.name) + '</span>' + (sub ? '<span class="sub" dir="auto">' + esc(sub) + '</span>' : '') + '</span>' +
+    '<span class="score">' + fmt(it.rating) + '</span></button>';
+}
+function podiumHTML(top){
+  var heights = [64, 44, 32];
+  return '<div class="podium">' + [1,0,2].map(function(idx){
+    var it = top[idx];
+    if(!it) return '<div></div>';
+    return '<button class="pc p' + (idx+1) + '" data-act="edit" data-id="' + it.id + '"><div class="pw">' + poster(it) + '<span class="sc">' + fmt(it.rating) + '</span></div>' +
+      '<div class="nm" dir="auto">' + esc(it.name) + '</div><div class="step" style="height:' + heights[idx] + 'px">' + (idx+1) + '</div></button>';
+  }).join('') + '</div>';
+}
+
+function viewHome(){
+  var cat = curCat();
+  var all = state.items.filter(function(i){ return i.cat === cat.id; });
+  var byRating = sortItems(all, 'rating');
+  var chips = state.cats.map(function(c){
+    return '<button class="chip' + (c.id === cat.id ? ' on' : '') + '" data-act="cat" data-id="' + c.id + '">' + catIcon(c, 18) + '<span>' + esc(c.name) + '</span></button>';
+  }).join('') + '<button class="chip add" data-act="new-cat">' + svg('plus', 16, 2) + '<span>تصنيف</span></button>';
+
+  var body;
+  if(!all.length){
+    body = '<div class="empty"><b>لا توجد عناصر بعد</b>أضف أول عنصر في ' + esc(cat.name) + ' وقيّمه.<br><button class="btn" data-act="add">إضافة عنصر</button></div>';
+  }else{
+    var sort = state.sort;
+    var list = sort === 'rating' ? byRating.slice(3) : sortItems(all, sort);
+    var rows = list.map(function(it, i){ return rowHTML(it, sort === 'rating' ? i + 4 : 0, it.note); }).join('');
+    body = '<div class="sec-h"><h2>الأفضل</h2></div>' + podiumHTML(byRating.slice(0,3));
+    if(list.length){
+      body += '<div class="sec-h"><h2>' + (sort === 'rating' ? 'بقية الترتيب' : 'جميع العناصر') + '</h2>' +
+        '<div class="seg" role="group" aria-label="الترتيب">' +
+        ['rating|التقييم','new|الأحدث','name|الاسم'].map(function(p){ var a = p.split('|'); return '<button class="' + (sort === a[0] ? 'on' : '') + '" data-act="sort" data-s="' + a[0] + '">' + a[1] + '</button>'; }).join('') +
+        '</div></div><div class="list">' + rows + '</div>';
+    }
+  }
+  return '<div class="pg-h"><h1>مُراجعة</h1><div class="sub">' + state.items.length + ' عنصر في ' + state.cats.length + ' تصنيف</div></div>' +
+    '<div class="chips">' + chips + '</div>' +
+    '<div class="sec-h"><h2>' + catIcon(cat, 22) + esc(cat.name) + '<span class="n">' + all.length + '</span></h2>' +
+    '<button class="ico" data-act="edit-cat" aria-label="إعدادات التصنيف">' + svg('dots', 22, 2.4) + '</button></div>' + body;
+}
+
+function searchResults(){
+  var q = query.trim().toLowerCase();
+  if(!q) return '<div class="empty"><b>ابحث عن أي شيء</b>يبحث في جميع التصنيفات دفعة واحدة.</div>';
+  var found = sortItems(state.items.filter(function(i){ return i.name.toLowerCase().indexOf(q) > -1; }), 'rating');
+  if(!found.length) return '<div class="empty"><b>لم يتم العثور على نتائج</b>جرّب كلمة أخرى.</div>';
+  return '<div class="list">' + found.map(function(it){ var c = catById(it.cat); return rowHTML(it, 0, c ? c.name : ''); }).join('') + '</div>';
+}
+function viewSearch(){
+  var seg = '<div class="seg wide" role="group" aria-label="نوع البحث" style="margin-bottom:14px">' +
+    [['lib','في مكتبتي'],['disc','اكتشاف']].map(function(p){ return '<button class="' + (searchMode === p[0] ? 'on' : '') + '" data-act="smode" data-m="' + p[0] + '">' + p[1] + '</button>'; }).join('') + '</div>';
+  if(searchMode === 'disc'){
+    var chips = [['all','الكل']].concat(ALLTYPES.concat(['wiki']).map(function(t){ return [t, TYPE_META[t].n]; })).map(function(p){
+      return '<button class="chip' + (dtype === p[0] ? ' on' : '') + '" data-act="dtype" data-t="' + p[0] + '">' + esc(p[1]) + '</button>';
+    }).join('');
+    return '<div class="pg-h"><h1>بحث</h1></div>' + seg +
+      '<div class="qwrap">' + svg('search', 20) + '<input class="inp" id="dq" dir="auto" placeholder="ابحث عن فيلم، مسلسل، أنمي، كتاب، ألبوم..." value="' + esc(dq) + '" autocomplete="off"></div>' +
+      '<div class="chips">' + chips + '</div><div id="dres">' + discBody() + '</div>';
+  }
+  return '<div class="pg-h"><h1>بحث</h1></div>' + seg +
+    '<div class="qwrap">' + svg('search', 20) + '<input class="inp" id="q" dir="auto" placeholder="ابحث في عناصرك المقيَّمة..." value="' + esc(query) + '" autocomplete="off"></div>' +
+    '<div id="res">' + searchResults() + '</div>';
+}
+function viewProfile(){
+  var p = state.profile, items = state.items, a = avg(items);
+  var initial = Array.from((p.name || '').trim())[0];
+  var av = p.avatar ? '<div class="av" style="' + bgUrl(p.avatar) + '"></div>'
+    : '<div class="av">' + (initial ? esc(initial.toUpperCase()) : svg('user', 38, 1.6)) + '</div>';
+  var best = sortItems(items, 'rating')[0];
+  var cats = state.cats.map(function(c){
+    var arr = items.filter(function(i){ return i.cat === c.id; }), m = avg(arr);
+    return '<div class="crow"><span>' + catIcon(c, 24) + '</span><div><div class="t">' + esc(c.name) + '</div>' +
+      '<div class="meter"><i style="width:' + (m ? Math.round(m * 10) : 0) + '%"></i></div></div>' +
+      '<div class="s">' + arr.length + ' عنصر، المتوسط ' + (m ? fmt(m) : '–') + '</div></div>';
+  }).join('');
+  var hist = '';
+  if(items.length){
+    var b = []; for(var k = 0; k < 10; k++) b.push(0);
+    items.forEach(function(i){ b[Math.min(10, Math.max(1, Math.floor(i.rating))) - 1]++; });
+    var mx = Math.max.apply(null, b) || 1;
+    hist = '<div class="cs"><h3>توزيع تقييماتك</h3><p>عدد العناصر في كل درجة.</p><div class="hist">' + b.map(function(n, i){
+      return '<div class="hb"><div class="col"><div class="bar" style="height:' + Math.round(n / mx * 100) + '%" title="' + n + '"></div></div><span>' + (i + 1) + '</span></div>';
+    }).join('') + '</div></div>';
+  }
+  return '<div class="pg-h"><h1>الملف الشخصي</h1></div>' +
+    '<div class="me">' + av + '<div class="col"><input class="inp" id="p-name" dir="auto" maxlength="30" placeholder="اسمك" value="' + esc(p.name) + '">' +
+    '<span class="btn ghost fpick">' + (p.avatar ? 'تغيير الصورة' : 'إضافة صورة') + '<input type="file" id="p-file" accept="image/*"></span>' +
+    (p.avatar ? '<button class="btn line" data-act="rm-avatar">إزالة الصورة</button>' : '') + '</div></div>' +
+    '<div class="stats"><div class="st"><b>' + items.length + '</b><span>عنصر</span></div><div class="st"><b>' + state.cats.length + '</b><span>تصنيف</span></div><div class="st"><b>' + (a ? fmt(a) : '–') + '</b><span>المتوسط</span></div></div>' +
+    (best ? '<div class="sec-h"><h2>أعلى تقييم لديك</h2></div><div class="list">' + rowHTML(best, 0, (catById(best.cat) || {}).name) + '</div>' : '') +
+    '<div class="sec-h"><h2>حسب التصنيف</h2></div><div class="cs" style="padding-top:6px;padding-bottom:6px">' + cats + '</div>' + hist;
+}
+
+function viewSettings(){
+  var t = state.settings.theme || 'auto';
+  var seg = [['light','أبيض'],['dark','أسود'],['auto','حسب الجهاز']].map(function(p){
+    return '<button class="' + (t === p[0] ? 'on' : '') + '" data-act="theme" data-t="' + p[0] + '">' + p[1] + '</button>';
+  }).join('');
+  return '<div class="pg-h"><h1>الإعدادات</h1></div>' +
+    '<div class="cs"><h3>الألوان</h3><p>التطبيق بالأبيض والأسود فقط. اختر الأبيض أو الأسود فتنعكس جميع الألوان مباشرة: الخلفية والنصوص والأزرار.</p><div class="seg wide" role="group" aria-label="الألوان">' + seg + '</div></div>' +
+    '<div class="cs"><h3>مصادر البحث</h3><p>الأفلام من iTunes، والمسلسلات والكرتون من TVmaze، والأنمي والمانغا والمانها والمانهوا من AniList، والكتب من Open Library، والألبومات والأغاني من iTunes. كلها بدون مفتاح.</p>' +
+    '<button class="btn line" data-act="test-src" style="width:100%">اختبار المصادر</button><div id="test-res"></div></div>' +
+    '<div class="cs"><h3>TMDB (اختياري)</h3><p>مصدر إضافي للأفلام والمسلسلات بتغطية أوسع. يحتاج مفتاحاً مجانياً من <a class="lnk" href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">themoviedb.org</a> وقبول شروطهم. بعد إدخال المفتاح اختر «TMDB» كمصدر للتصنيف.</p>' +
+    '<input class="inp" id="s-tmdb" dir="ltr" placeholder="مفتاح TMDB" value="' + esc(state.settings.tmdbKey || '') + '" autocomplete="off" autocapitalize="off" spellcheck="false"></div>' +
+    '<div class="cs"><h3>نسخة احتياطية</h3><p>بياناتك محفوظة على هذا المتصفح فقط. صدّر نسخة في ملف واحتفظ بها، ثم استوردها عند الحاجة.</p>' +
+    '<div class="acts"><button class="btn" data-act="export">تصدير</button>' +
+    '<span class="btn line fpick">استيراد<input type="file" id="i-file" accept=".json,application/json,text/plain"></span></div>' +
+    '</div>' +
+    '<div class="cs"><h3>البيانات</h3><p>حذف جميع العناصر والتصنيفات وإعادة التطبيق إلى حالته الأولى.</p><button class="btn danger" data-act="reset">حذف جميع البيانات</button></div>' +
+    '<div class="foot" style="line-height:1.9">مصادر البيانات: <a class="lnk" href="https://www.tvmaze.com" target="_blank" rel="noopener">TVmaze</a> (CC BY-SA 4.0)، AniList، Open Library، iTunes Search API، Wikidata (CC0)' + (tmdbKey() ? '، TMDB' : '') + '</div>' +
+    (tmdbKey() ? '<div class="foot" dir="ltr" style="margin-top:6px">This product uses the TMDB API but is not endorsed or certified by TMDB.</div>' : '') +
+    '<div class="foot">مُراجعة، الإصدار 7</div>';
+}
+
+function navHTML(){
+  function tab(v, icon, label){ return '<button class="tab' + (view === v ? ' on' : '') + '" data-act="nav" data-v="' + v + '">' + svg(icon, 24, view === v ? 2.2 : 1.8) + '<span>' + label + '</span></button>'; }
+  return '<div class="nav-in">' + tab('home','home','الرئيسية') + tab('search','search','بحث') +
+    '<button class="tab add" data-act="add" aria-label="إضافة عنصر"><span class="circ">' + svg('plus', 26, 2.2) + '</span></button>' +
+    tab('profile','user','الملف') + tab('settings','sliders','الإعدادات') + '</div>';
+}
+
+function render(){
+  applyTheme();
+  var html = view === 'search' ? viewSearch() : view === 'profile' ? viewProfile() : view === 'settings' ? viewSettings() : viewHome();
+  app.innerHTML = html;
+  nav.innerHTML = navHTML();
+}
+
+/* ---------- sheets ---------- */
+function openSheet(html){
+  layer.innerHTML = '<div class="ov" data-act="close-ov"><div class="sheet" role="dialog" aria-modal="true"><div class="grip"></div>' + html + '</div></div>';
+}
+function closeSheet(){ layer.innerHTML = ''; }
+
+var draft = null;
+function pvHTML(){
+  if(draft.img) return '<div class="poster" id="pv" style="' + bgUrl(draft.img) + '"></div>';
+  return '<div class="poster ph" id="pv">' + svg('film', 30, 1.6) + '</div>';
+}
+function refreshPv(){
+  $('#pv-wrap').innerHTML = pvHTML();
+  $('#rm-img').hidden = !draft.img;
+}
+function setRating(v){
+  v = Math.min(10, Math.max(1, Math.round(v * 10) / 10));
+  draft.rating = v;
+  $('#rv').textContent = fmt(v);
+  $('#rs').value = v;
+}
+function openItem(id, pre){
+  var it = id ? state.items.find(function(x){ return x.id === id; }) : null;
+  draft = it ? {id:it.id, cat:it.cat, name:it.name, img:it.img || '', rating:it.rating, note:it.note || ''}
+             : Object.assign({id:null, cat:state.active, name:'', img:'', rating:7, note:''}, pre || {});
+  var opts = state.cats.map(function(c){
+    return '<option value="' + c.id + '"' + (c.id === draft.cat ? ' selected' : '') + '>' + esc(c.name) + '</option>';
+  }).join('');
+  openSheet(
+    '<h3>' + (it ? 'تعديل العنصر' : 'عنصر جديد') + '</h3>' +
+    '<div id="src-wrap"></div>' +
+    '<div class="field"><div class="pick"><div id="pv-wrap">' + pvHTML() + '</div>' +
+    '<div class="hint">صورة الغلاف أو الملصق من معرض الصور.<span class="btn ghost fpick">اختيار صورة<input type="file" id="f-file" accept="image/*"></span>' +
+    '<button class="btn line" id="rm-img" data-act="rm-img"' + (draft.img ? '' : ' hidden') + '>إزالة الصورة</button></div></div>' +
+    '</div>' +
+    '<div class="field"><label class="l" for="f-name">الاسم</label><input class="inp" id="f-name" dir="auto" maxlength="120" value="' + esc(draft.name) + '" placeholder="اسم الفيلم أو المسلسل أو الألبوم"></div>' +
+    '<div class="field"><label class="l" for="f-cat">التصنيف</label><select class="inp" id="f-cat">' + opts + '</select></div>' +
+    '<div class="field rate"><div class="lab">التقييم من 1 إلى 10</div>' +
+    '<div class="line"><button class="pm" data-act="r-" aria-label="إنقاص">' + svg('plus', 22, 2).replace('M12 5v14M5 12h14','M5 12h14') + '</button><div class="big" id="rv">' + fmt(draft.rating) + '</div><button class="pm" data-act="r+" aria-label="زيادة">' + svg('plus', 22, 2) + '</button></div>' +
+    '<input type="range" id="rs" min="1" max="10" step="0.1" value="' + draft.rating + '">' +
+    '<div class="ends"><span>1.0</span><span>10.0</span></div></div>' +
+    '<div class="field"><label class="l" for="f-note">ملاحظة (اختياري)</label><textarea class="inp" id="f-note" rows="3" dir="auto" maxlength="500" placeholder="رأيك أو أي شيء تود تذكّره">' + esc(draft.note) + '</textarea></div>' +
+    '<div class="acts"><button class="btn" data-act="save-item">حفظ</button><button class="btn ghost" data-act="close">إلغاء</button></div>' +
+    (it ? '<div class="acts"><button class="btn danger" data-act="del-item">حذف العنصر</button></div>' : '')
+  );
+  refreshSrc();
+}
+function saveItem(){
+  var name = $('#f-name').value.trim();
+  if(!name){ toast('أدخل الاسم أولاً'); $('#f-name').focus(); return; }
+  var cat = $('#f-cat').value, note = $('#f-note').value.trim();
+  if(draft.id){
+    var i = state.items.findIndex(function(x){ return x.id === draft.id; });
+    if(i > -1) state.items[i] = Object.assign({}, state.items[i], {name:name, cat:cat, img:draft.img, rating:draft.rating, note:note});
+  }else{
+    state.items.push({id:uid(), cat:cat, name:name, img:draft.img, rating:draft.rating, note:note, added:Date.now()});
+  }
+  state.active = cat;
+  save(); closeSheet(); render();
+}
+
+var catDraft = null;
+function catPickHTML(){
+  var up = catDraft.img ? '<button class="ic on" data-act="rm-cimg" aria-label="إزالة الأيقونة المرفوعة"><span class="cim" style="' + bgUrl(catDraft.img) + '"></span></button>' : '';
+  return up + PICKABLE.map(function(k){
+    return '<button class="ic' + (!catDraft.img && catDraft.icon === k ? ' on' : '') + '" data-act="pick-icon" data-i="' + k + '" aria-label="' + k + '">' + svg(k, 24) + '</button>';
+  }).join('');
+}
+function openCat(id){
+  var c = id ? catById(id) : null;
+  catDraft = {id: c ? c.id : null, icon: c ? (c.icon || 'star') : 'star', img: c ? (c.img || '') : '', source: c ? (c.source || 'none') : 'none'};
+  openSheet(
+    '<h3>' + (c ? 'إعدادات التصنيف' : 'تصنيف جديد') + '</h3>' +
+    (c ? '' : presetsHTML()) + '<div class="field"><label class="l" for="c-name">الاسم</label><input class="inp" id="c-name" dir="auto" maxlength="40" value="' + esc(c ? c.name : '') + '" placeholder="مثلاً: ألعاب، كتب، مطاعم"></div>' + srcSelectHTML(catDraft.source) +
+    '<div class="field"><label class="l">الأيقونة</label><div class="icons" id="c-pick">' + catPickHTML() + '</div>' +
+    '<span class="btn ghost fpick" style="width:100%;margin-top:12px">رفع أيقونة من ملف<input type="file" id="c-file" accept="image/*"></span></div>' +
+    '<div class="acts"><button class="btn" data-act="save-cat">حفظ</button><button class="btn ghost" data-act="close">إلغاء</button></div>' +
+    (c ? '<div class="acts"><button class="btn danger" data-act="del-cat">حذف التصنيف وجميع عناصره</button></div>' : '')
+  );
+}
+function saveCat(){
+  var name = $('#c-name').value.trim();
+  if(!name){ toast('أدخل اسم التصنيف'); $('#c-name').focus(); return; }
+  if(catDraft.id){
+    var c = catById(catDraft.id);
+    c.name = name; c.icon = catDraft.icon; c.source = $('#c-src').value; if(catDraft.img) c.img = catDraft.img; else delete c.img;
+  }else{
+    var n = {id:uid(), name:name, icon:catDraft.icon, source:$('#c-src').value};
+    if(catDraft.img) n.img = catDraft.img;
+    state.cats.push(n); state.active = n.id; view = 'home';
+  }
+  save(); closeSheet(); render();
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', function(e){
+  var t = e.target.closest('[data-act]');
+  if(!t) return;
+  var a = t.dataset.act;
+  if(a === 'close-ov'){ if(e.target === t) closeSheet(); return; }
+  if(a === 'nav'){ view = t.dataset.v; render(); window.scrollTo(0, 0); }
+  else if(a === 'cat'){ state.active = t.dataset.id; save(); render(); }
+  else if(a === 'sort'){ state.sort = t.dataset.s; save(); render(); }
+  else if(a === 'add'){ openItem(null); }
+  else if(a === 'edit'){ openItem(t.dataset.id); }
+  else if(a === 'new-cat'){ openCat(null); }
+  else if(a === 'edit-cat'){ openCat(state.active); }
+  else if(a === 'close'){ closeSheet(); }
+  else if(a === 'save-item'){ saveItem(); }
+  else if(a === 'save-cat'){ saveCat(); }
+  else if(a === 'r-'){ setRating(draft.rating - 0.1); }
+  else if(a === 'r+'){ setRating(draft.rating + 0.1); }
+  else if(a === 'rm-img'){ draft.img = ''; refreshPv(); }
+  else if(a === 'pick-icon'){ catDraft.icon = t.dataset.i; catDraft.img = ''; $('#c-pick').innerHTML = catPickHTML(); }
+  else if(a === 'rm-cimg'){ catDraft.img = ''; $('#c-pick').innerHTML = catPickHTML(); }
+  else if(a === 'theme'){ state.settings.theme = t.dataset.t === 'auto' ? null : t.dataset.t; save(); render(); }
+  else if(a === 'rm-avatar'){ state.profile.avatar = ''; save(); render(); }
+  else if(a === 'export'){ doExport(); }
+  else if(a === 'test-src'){ runTests(); }
+  else if(a === 'smode'){ searchMode = t.dataset.m; render(); }
+  else if(a === 'dtype'){ dtype = t.dataset.t; render(); runDiscover(); }
+  else if(a === 'disc-pick'){
+    var ty = t.dataset.t, rr = dRes[ty] && dRes[ty].list[+t.dataset.i]; if(!rr) return;
+    var dcat = ty === 'wiki' ? curCat() : state.cats.find(function(c){ return c.source === ty; });
+    if(!dcat){ dcat = {id:uid(), name:TYPE_META[ty].n, icon:TYPE_META[ty].i, source:ty}; state.cats.push(dcat); save(); }
+    openItem(null, {cat:dcat.id, name:rr.title, img:imgSafe(rr.img || '')});
+  }
+  else if(a === 'pick-src'){
+    var r = srcList[+t.dataset.i]; if(!r) return;
+    $('#f-name').value = r.title;
+    if(r.img){ draft.img = imgSafe(r.img); refreshPv(); }
+    srcSeq++; $('#s-res').innerHTML = ''; $('#s-q').value = '';
+    toast('تم اختيار العنصر من المصدر');
+  }
+  else if(a === 'preset'){
+    var pr = PRESETS[+t.dataset.i];
+    $('#c-name').value = pr.n; catDraft.icon = pr.i; catDraft.img = ''; $('#c-pick').innerHTML = catPickHTML(); $('#c-src').value = pr.s;
+  }
+  else if(a === 'reset'){
+    openSheet('<h3>حذف جميع البيانات؟</h3><p class="note" style="margin:0 0 14px">ستُحذف جميع العناصر والتصنيفات التي أضفتها، ولا يمكن استرجاعها إلا من نسخة احتياطية.</p>' +
+      '<div class="acts"><button class="btn danger" data-act="do-reset">احذف كل شيء</button><button class="btn ghost" data-act="close">إلغاء</button></div>');
+  }
+  else if(a === 'do-reset'){
+    if(!t.classList.contains('sure')){ t.classList.add('sure'); t.textContent = 'اضغط مرة أخرى للتأكيد'; return; }
+    var keep = state.settings;
+    state = JSON.parse(JSON.stringify(DEFAULT)); state.settings = keep;
+    migrate(); save(); closeSheet(); view = 'home'; render(); toast('تم الحذف');
+  }
+  else if(a === 'do-import'){
+    var keepT = state.settings;
+    state = pendingImport; pendingImport = null;
+    if(!state.settings) state.settings = keepT;
+    migrate(); save(); closeSheet(); view = 'home'; render(); toast('تم الاستيراد');
+  }
+  else if(a === 'del-item'){
+    if(!t.classList.contains('sure')){ t.classList.add('sure'); t.textContent = 'اضغط مرة أخرى للتأكيد'; return; }
+    state.items = state.items.filter(function(x){ return x.id !== draft.id; });
+    save(); closeSheet(); render();
+  }
+  else if(a === 'del-cat'){
+    if(state.cats.length < 2){ toast('يجب أن يبقى تصنيف واحد على الأقل'); return; }
+    if(!t.classList.contains('sure')){ t.classList.add('sure'); t.textContent = 'اضغط مرة أخرى للتأكيد'; return; }
+    var id = catDraft.id;
+    state.cats = state.cats.filter(function(x){ return x.id !== id; });
+    state.items = state.items.filter(function(x){ return x.cat !== id; });
+    state.active = state.cats[0].id;
+    save(); closeSheet(); render();
+  }
+});
+document.addEventListener('input', function(e){
+  var id = e.target.id;
+  if(id === 'rs'){ setRating(parseFloat(e.target.value)); }
+  else if(id === 's-q'){ onSrcInput(e.target.value); }
+  else if(id === 'dq'){ dq = e.target.value; runDiscover(); }
+  else if(id === 's-tmdb'){ state.settings.tmdbKey = e.target.value.trim(); clearTimeout(input.t); input.t = setTimeout(save, 400); }
+  else if(id === 'q'){ query = e.target.value; $('#res').innerHTML = searchResults(); }
+  else if(id === 'p-name'){
+    state.profile.name = e.target.value;
+    clearTimeout(input.t); input.t = setTimeout(save, 400);
+  }
+});
+function input(){}
+document.addEventListener('change', function(e){
+  var id = e.target.id, f = e.target.files && e.target.files[0];
+  if(id === 'f-cat'){ refreshSrc(); return; }
+  if(!f) return;
+  if(id === 'f-file'){
+    compress(f, 640, 'image/jpeg', .82).then(function(d){ draft.img = d; refreshPv(); }).catch(function(){ toast('تعذّرت قراءة هذه الصورة'); });
+  }else if(id === 'c-file'){
+    compress(f, 160, 'image/png').then(function(d){ catDraft.img = d; $('#c-pick').innerHTML = catPickHTML(); }).catch(function(){ toast('تعذّرت قراءة هذه الصورة'); });
+  }else if(id === 'p-file'){
+    compress(f, 320, 'image/jpeg', .85).then(function(d){ state.profile.avatar = d; save(); render(); }).catch(function(){ toast('تعذّرت قراءة هذه الصورة'); });
+  }else if(id === 'i-file'){
+    var r = new FileReader();
+    r.onload = function(){
+      try{
+        var d = JSON.parse(r.result);
+        if(!d || !Array.isArray(d.cats) || !Array.isArray(d.items) || !d.cats.length) throw new Error('bad');
+        pendingImport = d;
+        openSheet('<h3>استيراد نسخة احتياطية؟</h3><p class="note" style="margin:0 0 14px">تحتوي على ' + d.items.length + ' عنصراً و' + d.cats.length + ' تصنيفاً، وستحل محل بياناتك الحالية.</p>' +
+          '<div class="acts"><button class="btn" data-act="do-import">استيراد</button><button class="btn ghost" data-act="close">إلغاء</button></div>');
+      }catch(x){ toast('هذا الملف ليس نسخة احتياطية صالحة'); }
+    };
+    r.readAsText(f);
+  }
+  e.target.value = '';
+});
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeSheet(); });
+try{
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){ if(!state.settings.theme) applyTheme(); });
+}catch(e){}
+
+try{
+  if('serviceWorker' in navigator && location.protocol === 'https:'){ navigator.serviceWorker.register('sw.js').catch(function(){}); }
+}catch(e){}
+load().then(function(){
+  render();
+  try{
+    if(window.claude && typeof window.claude.use === 'function'){
+      window.claude.use('downloads').then(function(d){ dl = d; if(view === 'settings') render(); }).catch(function(){});
+    }
+  }catch(e){}
+});
+})();
+</script>
+</body>
+</html>
