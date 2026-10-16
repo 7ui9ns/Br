@@ -1,10 +1,8 @@
 name: Build APK
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
-    inputs:
-      file:
-        description: اسم ملف التطبيق
-        default: index.html
 permissions:
   contents: write
 jobs:
@@ -22,10 +20,10 @@ jobs:
       - name: Prepare
         run: |
           mkdir www
-          cp "${{ github.event.inputs.file }}" www/index.html
+          if [ -f index.html ]; then cp index.html www/index.html; else cp "$(ls index*.html | head -n1)" www/index.html; fi
           npm init -y
           npm i @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7
-          npx cap init "مُراجعة" com.murajaa.app --web-dir=www
+          npx cap init "Murajaa" com.murajaa.app --web-dir=www
           npx cap add android
           npx cap sync android
       - name: Build
