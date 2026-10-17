@@ -1,9 +1,18 @@
-"screenshots": [
-  {
-    "src": "screenshots/home.png",
-    "sizes": "720x1280",
-    "type": "image/png",
-    "form_factor": "narrow",
-    "label": "الصفحة الرئيسية للتطبيق"
-  }
-]
+{
+  "name": "Br",
+  "short_name": "Br",
+  "start_url": "/Br/",
+  "scope": "/Br/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "screenshots": [
+    {
+      "src": "./screenshots/home.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "الصفحة الرئيسية"
+    }
+  ]
+}
